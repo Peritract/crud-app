@@ -1,4 +1,5 @@
 const db = require("../database/connect");
+const { listUsers, createUser } = require("../database/user-queries");
 
 /**
  * An app user
@@ -38,9 +39,25 @@ class User {
     static getAll() {
         return new Promise( async (resolve, reject) => {
             try {
-                const result = await db.query("SELECT * FROM user_account;");
+                const result = await db.query(listUsers);
                 const users = result.rows.map(r => new User(r));
                 resolve(users);
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
+
+    static create(data) {
+        return new Promise( async (resolve, reject) => {
+            try {
+                const result = await db.query(createUser,
+                                              [data.username,
+                                               data.password,
+                                               data.email,
+                                               data.role]);
+                const user = new User(result.rows[0]);
+                resolve(user);
             } catch (err) {
                 reject(err);
             }
