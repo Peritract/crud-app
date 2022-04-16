@@ -48,6 +48,12 @@ class User {
         })
     }
 
+    /**
+     * Registers a new user
+     * 
+     * @param {object} data An object describing a user
+     * @returns {Promise} A promise that resolves to a User object
+     */
     static create(data) {
         return new Promise( async (resolve, reject) => {
             try {
@@ -59,7 +65,21 @@ class User {
                 const user = new User(result.rows[0]);
                 resolve(user);
             } catch (err) {
-                reject(err);
+                let error = { code : 500, message : err.message };
+                if (err.hasOwnProperty("constraint")) {
+                    switch (err["constraint"]) {
+                        case "duplicate_username":
+                            error = { code : 400, message : "Username already in use" };
+                            break;
+                        case "duplicate_email":
+                            error = { code : 400, message : "Email already in use" };
+                            break;
+                        case "username_length":
+                            error = { code : 400, message : "Username length must be between 3 and 30 characters" };
+                            break;
+                    }
+                }
+                reject(error);
             }
         })
     }

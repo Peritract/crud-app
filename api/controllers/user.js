@@ -18,12 +18,17 @@ userController.get("/", async (req, res) => {
 
 userController.post("/", bodyParser.json(), async (req, res) => {
     try {
+
+        // username & password are absolutely required
+        if (!req.body.username || !req.body.password) {
+            throw { code: 400, message: "Insufficient information provided to create account"}
+        }
+
         const hashed = await bcrypt.hash(req.body.password,
                                          parseInt(process.env.BCRYPT_SALT_ROUNDS));
         const user = await User.create({ ...req.body, password: hashed, role: "user" });
         res.status(201).json({ success : true, user : user.details });
     } catch (err) {
-        console.log(err);
         res.status(err.code).json({ success : false, message : err.message })
     }
 })
