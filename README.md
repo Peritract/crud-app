@@ -26,3 +26,5 @@ and stop it all (including removing the database) with
 ```bash
 ./scripts/teardown.sh
 ```
+
+For convenience, `./scripts/reset.sh` will run both the above commands in sequence.
