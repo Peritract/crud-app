@@ -1,0 +1,29 @@
+{
+  "name": "crud-app-api",
+  "version": "1.0.0",
+  "description": "API server for an example CRUD app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Peritract/crud-app.git"
+  },
+  "author": "Dan Keefe (Peritract)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Peritract/crud-app/issues"
+  },
+  "homepage": "https://github.com/Peritract/crud-app#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
