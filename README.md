@@ -1,2 +1,2 @@
 # crud-app
-Example CRUD app for experimenting/demoing concepts
+Example CRUD app for experimenting with/demoing concepts
