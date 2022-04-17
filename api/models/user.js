@@ -1,5 +1,8 @@
 const db = require("../database/connect");
-const { listUsers, createUser, getUserByUsername } = require("../database/user-queries");
+const { listUsers,
+        createUser,
+        getUserByUsername,
+        deleteUserByUsername } = require("../database/user-queries");
 
 /**
  * An app user
@@ -84,7 +87,13 @@ class User {
         })
     }
 
-    static getUserByUsername(username) {
+    /**
+     * Returns a user object matching a given username
+     * 
+     * @param {string} username the username to search for
+     * @returns {object} A user object
+     */
+    static getUserByUsername (username) {
         return new Promise ( async (resolve, reject) => {
             try {
                 const result = await db.query(getUserByUsername, [username]);
@@ -104,6 +113,27 @@ class User {
                 }
                 console.log(err);
                 reject (err);
+            }
+        })
+    }
+
+    static deleteUserByUsername (username) {
+        return new Promise ( async (resolve, reject) => {
+            try {
+                const result = await db.query(deleteUserByUsername, [username]);
+
+
+
+            } catch (err) {
+
+                // Handle unanticipated Postgres errors
+                if (typeof err.code == "string") {
+                    err = { code : 500, message : err.message };
+                }
+                
+                console.log(err);
+                reject (err);
+
             }
         })
     }

@@ -13,8 +13,14 @@ const getUserByUsername = `SELECT *
                            FROM user_account
                            WHERE user_name = $1;`
 
+const deleteUserByUsername = `DELETE
+                              FROM user_account
+                              WHERE user_name = $1
+                              RETURNING user_name;`
+
 module.exports = {
     listUsers,
     createUser,
-    getUserByUsername
+    getUserByUsername,
+    deleteUserByUsername
 }

@@ -1,8 +1,10 @@
 const { Router } = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const verifyToken = require("../middleware/verifyToken");
 
 const userController = Router();
 
@@ -45,6 +47,34 @@ userController.get("/:username", async (req, res) => {
             err = {code : 500, message : err.message }
         }
         res.status(err.code).json({ success : false, message : err.message })
+    }
+})
+
+// Delete
+userController.delete("/:username", verifyToken, bodyParser.json(), async (req, res) => {
+    try {
+        const token = header["authorization"].split(" ")[1];
+        const payload = jwt.decode(token);
+
+        if (!payload.role == "admin" || !payload.username == req.body.username) {
+            throw { code : 403, message : "Insufficient permissions to delete account" };
+        } else {
+
+            const result = User.deleteUserByUsername(req.body.username);
+
+            if (result.rows.length != 1) {
+                throw { code : 404, message : "No matching user to delete" };
+            }
+
+            res.send(200).json({ success : true, deleted : user})
+
+        }
+        
+    } catch (err) {
+        if (!err.hasOwnProperty("code")) {
+            err = {code : 500, message : err.message }
+        }
+        res.status(err.code).json({ success : false, message : err.message });
     }
 })
 
