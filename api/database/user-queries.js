@@ -9,7 +9,12 @@ const createUser = `INSERT INTO user_account (
                         $1, $2, $3, $4
                     ) RETURNING *;`
 
+const getUserByUsername = `SELECT *
+                           FROM user_account
+                           WHERE user_name = $1;`
+
 module.exports = {
     listUsers,
-    createUser
+    createUser,
+    getUserByUsername
 }

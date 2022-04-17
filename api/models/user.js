@@ -1,5 +1,5 @@
 const db = require("../database/connect");
-const { listUsers, createUser } = require("../database/user-queries");
+const { listUsers, createUser, getUserByUsername } = require("../database/user-queries");
 
 /**
  * An app user
@@ -80,6 +80,30 @@ class User {
                     }
                 }
                 reject(error);
+            }
+        })
+    }
+
+    static getUserByUsername(username) {
+        return new Promise ( async (resolve, reject) => {
+            try {
+                const result = await db.query(getUserByUsername, [username]);
+
+                if (result.rows.length != 1) {
+                    throw {code : 404, message : "Unable to locate user"};
+                }
+
+                const user = new User(result.rows[0]);
+                resolve(user);
+
+            } catch (err) {
+
+                // Handle unanticipated Postgres errors
+                if (typeof err.code == "string") {
+                    err = { code : 500, message : err.message };
+                }
+                console.log(err);
+                reject (err);
             }
         })
     }
