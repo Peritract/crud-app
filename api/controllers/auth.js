@@ -1,14 +1,9 @@
-const { Router } = require("express");
-const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
-const e = require("express");
 
-const authController = Router();
-
-authController.post("/login", bodyParser.json(), async (req, res) => {
+async function logIn (req, res) {
     try {
         const user = await User.getUserByUsername(req.body.username);
 
@@ -28,6 +23,8 @@ authController.post("/login", bodyParser.json(), async (req, res) => {
         }
         res.status(err.code).json({ success : false, message : err.message })
     }
-})
+}
 
-module.exports = authController;
+module.exports = {
+    logIn
+};

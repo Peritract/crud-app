@@ -2,14 +2,17 @@ const express = require("express");
 
 const logRoutes = require("./middleware/log-routes");
 
-const userController = require("./controllers/user");
-const authController = require("./controllers/auth");
+const userRouter = require("./routers/user");
+const authRouter = require("./routers/auth");
 
 const api = express();
 
+api.use(express.json());
+api.use(express.urlencoded({extended:false}));
+
 api.use(logRoutes);
 
-api.use("/users", userController);
-api.use("/auth", authController);
+api.use("/users", userRouter);
+api.use("/auth", authRouter);
 
 module.exports = api;
