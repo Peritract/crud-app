@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="/assets/images/octo.ico">
+    <title>CRUD App | Home</title>
+    <script src='https://cdn.jsdelivr.net/npm/jwt-decode@1.5.1/build/jwt-decode.min.js'></script>
+    <script src="./assets/scripts/index.js" defer></script>
 </head>
 <body>
-    AAAARGH
+    <h1>CRUD App</h1>
+    <ul>
+        <li><a id="log-link" href="/login">Log in</a></li>
+        <li><a href="/register">Register</a></li>
+        <li><a href="/users">Users</a></li>
+    </ul>
+    <p>Current user: <span  id="current-user">None</span></p>
 </body>
 </html>

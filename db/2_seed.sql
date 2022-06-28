@@ -5,7 +5,7 @@ INSERT INTO user_account (
     user_role
 ) VALUES (
     'admin',
-    '$2y$12$Nu9OPRgbeYDS1BIuLFIYmuYMSyUMNj6nyBUHuDBEll5VGPUMW8Iwe',
+    '$2a$12$L8VxVk4EgfGweQF8z2VGd.wKdPXq1UkLyfQKXrZsGf4LKkQC1P1Dq',
     NULL,
     'admin'
 );

@@ -8,6 +8,7 @@ async function logIn (req, res) {
         const user = await User.getUserByUsername(req.body.username);
 
         const authenticated = await bcrypt.compare(req.body.password, user.password);
+        console.log(req.body.password, user.password, authenticated)
 
         if (authenticated) {
             const token = await jwt.sign(user.details,
